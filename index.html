@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Birds</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{url_for('static',filename=favicon)}}"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/d3-time-format@4"></script>
+
+    <link rel="stylesheet" href="{{url_for('static',filename=stylesheet)}}" />
+    <!-- Compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"
+    />
+  </head>
+  <body class="">
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper light-blue darken-4 z-depth-3">
+          <div class="container">
+            <a href="#" class="brand-logo">Dave's Birds</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <li><a href="#about">About</a></li>
+              <li><a href="#calendar">Calendar</a></li>
+              <li><a href="#weather">Weather</a></li>
+              <li><a href="#bird-groupings">Similar Birds</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container white padding-10">
+      <div>
+        <h1 class="center-flex">Dave's Birds</h1>
+        <div class="img-container">
+          <img class="main-image" src="{{url_for('static',filename=file)}}" />
+        </div>
+        <div class="" id="about">
+          <p>
+            Everyone had a Pandemic hobby. Dave picked
+            <strong>Birdwatching</strong>, as he ventured to local sites to
+            discover the birds there. Two years later, he decided he wanted to
+            track the birds he saw in his yard to better see the migration
+            patterns of birds. Starting from 1/1/2023, let's look at the birds
+            together!
+          </p>
+          <p>
+            Starting in 2023, this data tracks the birds that Dave Rizzo has
+            seen in Davis, CA. What started as a simple project to find simple
+            migration patterns has turned into 1.75 years worth of data ripe for
+            analyzing.
+          </p>
+          <ul>
+            <li>
+              <span class="bold-text">Yard:</span> Birds seen while standing on
+              his property.
+            </li>
+            <li>
+              <span class="bold-text">Flyover:</span> Birds only seen in the
+              sky.
+            </li>
+            <li>
+              <span class="bold-text">Work: </span>Birds seen when walking to
+              and from work, a 2 mile walk onto the UC Davis campus.
+            </li>
+          </ul>
+        </div>
+
+        <div class="divider-div"></div>
+
+        <div class="temp-box black-box" id="calendar">
+          <h3>Calendar View</h3>
+        </div>
+
+        <div class="divider-div"></div>
+
+        <div class="temp-box black-box" id="weather">
+          <h3>Weather View</h3>
+        </div>
+
+        <div class="divider-div"></div>
+
+        <div class="temp-box black-box" id="bird-groupings">
+          <h3>Similar Birds over Time</h3>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script
+      type="text/javascript"
+      src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"
+    ></script>
+    <script type="text/javascript" src="./assets/calendar.js"></script>
+    <script type="text/javascript">
+      function loadCSV(url) {
+        fetch(url)
+          .then((response) => response.text())
+          .then((data) => {
+            // Process CSV data here
+            console.log(data);
+
+            // Example: Split data into rows and columns
+            const rows = data.split("\n");
+            const headers = rows[0].split(",");
+
+            const parsedData = rows.slice(1).map((row) => {
+              const values = row.split(",");
+              const rowData = {};
+              headers.forEach((header, index) => {
+                rowData[header] = values[index];
+              });
+              return rowData;
+            });
+
+            console.log(parsedData);
+          })
+          .catch((error) => console.error("Error loading CSV:", error));
+      }
+
+      // Example usage
+      loadCSV("https://docs.google.com/spreadsheets/d/e/2PACX-1vQWxgSAPj_meja50culy7oOtS8PxzWU38_4_18aBEPu498JJTcuDs97aWtZZeKJ2_bzXvm7s9pWG9SU/pub?gid=870901509&single=true&output=csv");
+    </script>
+  </body>
+</html>
